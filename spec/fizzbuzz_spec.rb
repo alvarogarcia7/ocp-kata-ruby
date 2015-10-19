@@ -43,7 +43,7 @@ class Rule
   def self.union *rules
     lambda {|a_number|
       all_rules = rules.map {|rule| rule.call a_number}
-      all_rules.join("") if all_rules.select {|x| x.nil? }.empty?}
+      all_rules.join("") if all_rules.all? {|x| not x.nil?} }
   end
 
 end
