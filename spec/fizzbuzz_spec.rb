@@ -1,6 +1,7 @@
 RSpec.describe "#say" do
   before(:each) do
     @fizz_buzz = FizzBuzz.new(Rule.union(Rule.fizz, Rule.buzz),
+                              Rule.bang,
                               Rule.fizz,
                               Rule.buzz,
                               Rule.to_string)
@@ -38,6 +39,10 @@ class Rule
 
   def self.buzz
     lambda {|a_number| "Buzz" if a_number % 5 == 0}
+  end
+
+  def self.bang
+    lambda {|a_number| "Bang" if a_number % 7 == 0}
   end
 
   def self.to_string
