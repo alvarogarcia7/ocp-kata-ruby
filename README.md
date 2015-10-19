@@ -2,4 +2,4 @@
 
 ## Execution
 
-use ``bundle exec guard``
+use ``cycle.sh`` to execute the tests
