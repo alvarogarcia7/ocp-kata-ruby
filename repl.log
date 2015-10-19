@@ -9,3 +9,5 @@
 [1,2, 3].select{|x| x % 2 == 0}
 [nil,nil].join("")
 [nil, nil].all? {|x| not x.nil?}
+[nil, nil].none? {|x| not x.nil?}
+[nil, nil].none? {|x| x.nil?}
