@@ -1,6 +1,7 @@
 RSpec.describe "#say" do
   before(:each) do
     @fizz_buzz = FizzBuzz.new(
+                              Rule.union(Rule.fizz, Rule.buzz, Rule.bang),
                               Rule.union(Rule.fizz, Rule.buzz),
                               Rule.union(Rule.fizz, Rule.bang),
                               Rule.bang,
