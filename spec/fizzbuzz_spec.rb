@@ -33,6 +33,10 @@ RSpec.describe "#say" do
     expect(say(3*7)).to eq "FizzBang"
   end
 
+  it "multiples of three, five and seven are converted to FizzBuzzBang" do
+    expect(say(3*5*7)).to eq "FizzBuzzBang"
+  end
+
   def say a_number
     @fizz_buzz.say(a_number)
   end
