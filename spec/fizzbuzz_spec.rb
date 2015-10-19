@@ -1,10 +1,18 @@
+require 'rubygems'
+require 'combination_generator'
+
 RSpec.describe "#say" do
   before(:each) do
+    rules = []
+    initial_rules = [Rule.fizz, Rule.buzz, Rule.bang]
+    select(1, initial_rules, rules)
+    select(2, initial_rules, rules)
+    select(3, initial_rules, rules)
     @fizz_buzz = FizzBuzz.new(
                               Rule.union(Rule.fizz, Rule.buzz, Rule.bang),
                               Rule.union(Rule.fizz, Rule.buzz),
-                              Rule.union(Rule.buzz, Rule.bang),
                               Rule.union(Rule.fizz, Rule.bang),
+                              Rule.union(Rule.buzz, Rule.bang),
                               Rule.bang,
                               Rule.fizz,
                               Rule.buzz,
@@ -45,6 +53,12 @@ RSpec.describe "#say" do
 
   def say a_number
     @fizz_buzz.say(a_number)
+  end
+
+  def select(amount, initial_rules, rules)
+    CombinationGenerator.new(amount, initial_rules).each do |element|
+      rules << Rule.union(*element)
+    end
   end
 end
 
