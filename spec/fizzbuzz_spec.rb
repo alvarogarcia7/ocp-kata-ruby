@@ -3,6 +3,7 @@ RSpec.describe "#say" do
     @fizz_buzz = FizzBuzz.new(
                               Rule.union(Rule.fizz, Rule.buzz, Rule.bang),
                               Rule.union(Rule.fizz, Rule.buzz),
+                              Rule.union(Rule.buzz, Rule.bang),
                               Rule.union(Rule.fizz, Rule.bang),
                               Rule.bang,
                               Rule.fizz,
