@@ -55,7 +55,7 @@ RSpec.describe "#say" do
   def create_set_of_rules
     rules = []
     initial_rules = [Rule.fizz, Rule.buzz, Rule.bang]
-    3.downto(1).each{|n| rules = rules.concat(select(n, initial_rules))}
+    (initial_rules.length).downto(1).each{|n| rules = rules.concat(select(n, initial_rules))}
     rules
   end
 end
