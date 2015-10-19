@@ -11,3 +11,6 @@
 [nil, nil].all? {|x| not x.nil?}
 [nil, nil].none? {|x| not x.nil?}
 [nil, nil].none? {|x| x.nil?}
+[1,2].concat[13]
+[1,2].concat([13])
+[1,2].concat [13]

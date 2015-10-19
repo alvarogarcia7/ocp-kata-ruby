@@ -44,18 +44,20 @@ RSpec.describe "#say" do
     @fizz_buzz.say(a_number)
   end
 
-  def select(amount, initial_rules, rules)
+  def select(amount, initial_rules)
+    rules = []
     CombinationGenerator.new(amount, initial_rules).each do |element|
       rules << Rule.union(*element)
     end
+    rules
   end
 
   def create_set_of_rules
     rules = []
     initial_rules = [Rule.fizz, Rule.buzz, Rule.bang]
-    select(3, initial_rules, rules)
-    select(2, initial_rules, rules)
-    select(1, initial_rules, rules)
+    rules = rules.concat(select(3, initial_rules))
+    rules = rules.concat(select(2, initial_rules))
+    rules = rules.concat(select(1, initial_rules))
     rules
   end
 end
