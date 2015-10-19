@@ -1,1 +1,10 @@
 
+[1,2].map{|x| not x.nil?}
+[1,2].select{|x| not x.nil?}
+[1,2].select{|x| not x.nil?}.first
+[1,2, nil].select{|x| not x.nil?}.first
+[1,2, nil].select{|x| not x.nil?}
+[1,2, 3].map{|x| x+1}
+[1,2, 3].select{|x| x % 2}
+[1,2, 3].select{|x| x % 2 == 0}
+[nil,nil].join("")
