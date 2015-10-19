@@ -54,6 +54,6 @@ class FizzBuzz
   end
 
   def say a_number
-    @rules.map {|rule| rule.call a_number}.select {|text| not text.nil?}.first
+    @rules.map {|rule| rule.call a_number}.compact.first
   end
 end
