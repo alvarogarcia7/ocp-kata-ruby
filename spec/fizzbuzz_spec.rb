@@ -3,13 +3,7 @@ require 'combination_generator'
 
 RSpec.describe "#say" do
   before(:each) do
-    rules = []
-    initial_rules = [Rule.fizz, Rule.buzz, Rule.bang]
-    select(3, initial_rules, rules)
-    select(2, initial_rules, rules)
-    select(1, initial_rules, rules)
-    create_set_of_rules_value = rules
-    rules = create_set_of_rules_value
+    rules = create_set_of_rules
     @fizz_buzz = FizzBuzz.new(*rules,
                               Rule.to_string)
   end
@@ -54,6 +48,15 @@ RSpec.describe "#say" do
     CombinationGenerator.new(amount, initial_rules).each do |element|
       rules << Rule.union(*element)
     end
+  end
+
+  def create_set_of_rules
+    rules = []
+    initial_rules = [Rule.fizz, Rule.buzz, Rule.bang]
+    select(3, initial_rules, rules)
+    select(2, initial_rules, rules)
+    select(1, initial_rules, rules)
+    rules
   end
 end
 
