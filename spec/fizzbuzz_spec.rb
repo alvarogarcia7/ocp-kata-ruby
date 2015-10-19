@@ -5,17 +5,12 @@ RSpec.describe "#say" do
   before(:each) do
     rules = []
     initial_rules = [Rule.fizz, Rule.buzz, Rule.bang]
-    select(1, initial_rules, rules)
-    select(2, initial_rules, rules)
     select(3, initial_rules, rules)
-    @fizz_buzz = FizzBuzz.new(
-                              Rule.union(Rule.fizz, Rule.buzz, Rule.bang),
-                              Rule.union(Rule.fizz, Rule.buzz),
-                              Rule.union(Rule.fizz, Rule.bang),
-                              Rule.union(Rule.buzz, Rule.bang),
-                              Rule.bang,
-                              Rule.fizz,
-                              Rule.buzz,
+    select(2, initial_rules, rules)
+    select(1, initial_rules, rules)
+    create_set_of_rules_value = rules
+    rules = create_set_of_rules_value
+    @fizz_buzz = FizzBuzz.new(*rules,
                               Rule.to_string)
   end
   it "simple numbers are converted to text" do
