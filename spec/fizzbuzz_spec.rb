@@ -41,7 +41,9 @@ class Rule
   end
 
   def self.union *rules
-    lambda {|a_number| rules.map {|rule| rule.call a_number}.join("") if a_number % 15 == 0}
+    lambda {|a_number|
+      all_rules = rules.map {|rule| rule.call a_number}
+      all_rules.join("") if all_rules.select {|x| x.nil? }.empty?}
   end
 
 end
