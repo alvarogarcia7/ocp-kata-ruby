@@ -1,6 +1,18 @@
 require 'rubygems'
 require 'combination_generator'
 
+RSpec.describe "#specification" do
+  before(:each) do
+    rules = [Rule.when{|x| x == 0}.then{|x| x.to_s}]
+    @fizz_buzz = FizzBuzz.new(*rules)
+  end
+
+  it 'apply a simple rule described by a specification' do
+    expect(say(0)).to eq "0"
+  end
+
+end
+
 RSpec.describe "#say" do
   before(:each) do
     rules = [Rule.boom].concat(create_set_of_rules)
