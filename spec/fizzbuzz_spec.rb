@@ -1,6 +1,8 @@
 require 'rubygems'
 require 'combination_generator'
 
+
+
 RSpec.describe "#specification" do
   before(:each) do
     rules = [Rule.when{|x| x == 0}.then{|x| x.to_s}]
@@ -11,6 +13,10 @@ RSpec.describe "#specification" do
     expect(say(0)).to eq "0"
   end
 
+
+  def say a_number
+    @fizz_buzz.say(a_number)
+  end
 end
 
 RSpec.describe "#say" do
@@ -103,6 +109,22 @@ class Rule
     lambda {|a_number|
       all_rules = rules.map {|rule| rule.call a_number}
       all_rules.join("") if all_rules.none? {|x| x.nil?} }
+  end
+
+  def initialize &predicate
+    @predicate = predicate
+  end
+
+  def self.when &predicate
+    self.new &predicate
+  end
+
+  def then &action
+    @action = action
+  end
+
+  def call a_number
+    @action.call a_number if @predicate.call a_number
   end
 
 end
