@@ -79,7 +79,7 @@ class Rule
   end
 
   def self.boom
-    lambda {|a_number| "Boom" if a_number % 4 == 0}
+    lambda {|a_number| "Boom" if a_number % 4 == 0 or a_number % 6 == 0}
   end
 
   def self.to_string
