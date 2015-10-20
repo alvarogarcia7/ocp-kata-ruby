@@ -1,86 +1,84 @@
 require 'rubygems'
 require 'combination_generator'
 
-
-
-RSpec.describe "#specification" do
-  before(:each) do
-    rules = [Rule.when{|x| x == 0}.then{|x| x.to_s}]
-    @fizz_buzz = FizzBuzz.new(*rules)
-  end
-
-  it 'apply a simple rule described by a specification' do
-    expect(say(0)).to eq "0"
-  end
-
-
-  def say a_number
-    @fizz_buzz.say(a_number)
-  end
-end
-
-RSpec.describe "#say" do
-  before(:each) do
-    rules = [Rule.boom].concat(create_set_of_rules)
-    @fizz_buzz = FizzBuzz.new(*rules,
-                              Rule.to_string)
-  end
-  it "simple numbers are converted to text" do
-    expect(say(1)).to eq "1"
-    expect(say(2)).to eq "2"
-  end
-
-  it "multiples of three are converted to Fizz" do
-    expect(say(3)).to eq "Fizz"
-  end
-
-  it "multiples of five are converted to Buzz" do
-    expect(say(5)).to eq "Buzz"
-  end
-
-  it "multiples of three and five are converted to FizzBuzz" do
-    expect(say(3*5)).to eq "FizzBuzz"
-  end
-
-  it "multiples of seven are converted to Bang" do
-    expect(say(7)).to eq "Bang"
-  end
-
-  it "multiples of three and seven are converted to FizzBang" do
-    expect(say(3*7)).to eq "FizzBang"
-  end
-
-  it "multiples of five and seven are converted to BuzzBang" do
-    expect(say(5*7)).to eq "BuzzBang"
-  end
-
-  it "multiples of three, five and seven are converted to FizzBuzzBang" do
-    expect(say(3*5*7)).to eq "FizzBuzzBang"
-  end
-
-  it 'multiples of four or six are Boom' do
-    expect(say(4)).to eq 'Boom'
-    expect(say(6)).to eq 'Boom'
-  end
+RSpec.describe "Open-Close Kata" do
 
   def say a_number
     @fizz_buzz.say(a_number)
   end
 
-  def select(amount, initial_rules)
-    rules = []
-    CombinationGenerator.new(amount, initial_rules).each do |element|
-      rules << Rule.union(*element)
+  describe 'with the specification pattern' do
+    before(:each) do
+      rules = [Rule.when{|x| x == 0}.then{|x| x.to_s}]
+      @fizz_buzz = FizzBuzz.new(*rules)
     end
-    rules
+
+    it 'apply a simple rule described by a specification' do
+      expect(say(0)).to eq "0"
+    end
   end
 
-  def create_set_of_rules
-    initial_rules = [Rule.fizz, Rule.buzz, Rule.bang]
-    rules = []
-    rules_size = (initial_rules.length).downto(1)
-    rules_size.each{|n| rules = rules.concat(select(n, initial_rules))}
-    rules
+  describe 'with a chain of rules' do
+
+    before(:each) do
+      rules = [Rule.boom].concat(create_set_of_rules)
+      @fizz_buzz = FizzBuzz.new(*rules,
+                                Rule.to_string)
+    end
+
+    it "simple numbers are converted to text" do
+      expect(say(1)).to eq "1"
+      expect(say(2)).to eq "2"
+    end
+
+    it "multiples of three are converted to Fizz" do
+      expect(say(3)).to eq "Fizz"
+    end
+
+    it "multiples of five are converted to Buzz" do
+      expect(say(5)).to eq "Buzz"
+    end
+
+    it "multiples of three and five are converted to FizzBuzz" do
+      expect(say(3*5)).to eq "FizzBuzz"
+    end
+
+    it "multiples of seven are converted to Bang" do
+      expect(say(7)).to eq "Bang"
+    end
+
+    it "multiples of three and seven are converted to FizzBang" do
+      expect(say(3*7)).to eq "FizzBang"
+    end
+
+    it "multiples of five and seven are converted to BuzzBang" do
+      expect(say(5*7)).to eq "BuzzBang"
+    end
+
+    it "multiples of three, five and seven are converted to FizzBuzzBang" do
+      expect(say(3*5*7)).to eq "FizzBuzzBang"
+    end
+
+    it 'multiples of four or six are Boom' do
+      expect(say(4)).to eq 'Boom'
+      expect(say(6)).to eq 'Boom'
+    end
+
+    def select(amount, initial_rules)
+      rules = []
+      CombinationGenerator.new(amount, initial_rules).each do |element|
+        rules << Rule.union(*element)
+      end
+      rules
+    end
+
+    def create_set_of_rules
+      initial_rules = [Rule.fizz, Rule.buzz, Rule.bang]
+      rules = []
+      rules_size = (initial_rules.length).downto(1)
+      rules_size.each{|n| rules = rules.concat(select(n, initial_rules))}
+      rules
+    end
   end
 end
 
@@ -126,7 +124,6 @@ class Rule
   def call a_number
     @action.call a_number if @predicate.call a_number
   end
-
 end
 
 class FizzBuzz
