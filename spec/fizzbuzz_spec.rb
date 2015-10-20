@@ -42,6 +42,7 @@ RSpec.describe "#say" do
 
   it 'multiples of four or six are Boom' do
     expect(say(4)).to eq 'Boom'
+    expect(say(6)).to eq 'Boom'
   end
 
   def say a_number
