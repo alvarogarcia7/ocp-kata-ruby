@@ -9,12 +9,18 @@ RSpec.describe "Open-Close Kata" do
 
   describe 'with the specification pattern' do
     before(:each) do
-      rules = [Rule.when{|x| x == 0}.then{|x| x.to_s}]
+      rules = [Rule.when{|x| x == 0}.then{|x| x.to_s},
+               Rule.when{|x| x == 2}.or.when{|x| x == 4}.then{|x| "Pair_#{x}"}]
       @fizz_buzz = FizzBuzz.new(*rules)
     end
 
     it 'apply a simple rule described by a specification' do
       expect(say(0)).to eq "0"
+    end
+
+    it 'apply a rule with A or B' do
+      expect(say(2)).to eq "Pair_2"
+      expect(say(4)).to eq "Pair_4"
     end
   end
 
