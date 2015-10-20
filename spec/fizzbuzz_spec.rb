@@ -3,7 +3,7 @@ require 'combination_generator'
 
 RSpec.describe "#say" do
   before(:each) do
-    rules = create_set_of_rules
+    rules = [Rule.boom].concat(create_set_of_rules)
     @fizz_buzz = FizzBuzz.new(*rules,
                               Rule.to_string)
   end
@@ -75,6 +75,10 @@ class Rule
 
   def self.bang
     lambda {|a_number| "Bang" if a_number % 7 == 0}
+  end
+
+  def self.boom
+    lambda {|a_number| "Boom" if a_number % 4 == 0}
   end
 
   def self.to_string
