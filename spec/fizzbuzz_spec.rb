@@ -11,7 +11,7 @@ RSpec.describe "Open-Close Kata" do
     before(:each) do
       rules = [Rule.or(->x{x == 2}, ->x{x == 4}).then{|x| "Pair_#{x}"},
               Rule.if(->x {x == 0}).then{|x| x.to_s},
-              Rule.and(->x{x % 3 == 0}, Rule.or(->x{x % 2 == 0}, ->x{x%7==0})).then{|x| "Multiple_3,#{x%2==0?2:7}"},
+              Rule.and(->x{x % 3 == 0}, Rule.or(->x{x % 2 == 0}, ->x{x % 7 == 0})).then{|x| "Multiple_3,#{ x % 2 == 0? 2 : 7}"},
               Rule.and(->x{x % 3 == 0}, Rule.not(->x{x % 2 == 0})).then{|x| "Multiple_3_but_not_2"},
               Rule.not(->x{x > 0}).then{|x| "Negative_#{-x}"},
       ]
