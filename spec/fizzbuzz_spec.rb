@@ -144,6 +144,10 @@ class Rule
     self.new {|a_number| predicates.map {|predicate1| predicate1.call a_number}.inject(true) {|acc, e| acc and e}}
   end
 
+  def self.not predicate
+    self.new {|a_number| not predicate.call a_number}
+  end
+
   def then &action
     @action = action
     self
