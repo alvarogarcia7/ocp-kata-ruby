@@ -141,11 +141,11 @@ class Rule
   end
 
   def self.or *predicates
-    self.new {|a_number| apply_to_all(predicates, a_number).inject(false) {|acc, e| acc or e}}
+    self.new {|a_number| apply_to_all(predicates, a_number).reduce(false) {|acc, e| acc or e}}
   end
 
   def self.and *predicates
-    self.new {|a_number| apply_to_all(predicates, a_number).inject(true) {|acc, e| acc and e}}
+    self.new {|a_number| apply_to_all(predicates, a_number).reduce(true) {|acc, e| acc and e}}
   end
 
   def self.not predicate

@@ -23,3 +23,5 @@
 load "src/fizzbuzz_spec.rb"
 load "spec/fizzbuzz_spec.rb"
 load "spec/spec_helper.rb"
+[1,2,3].reduce{|acc,e| acc + e }
+[1,2,3].reduce(1){|acc,e| acc + e }
