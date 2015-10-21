@@ -23,6 +23,11 @@ RSpec.describe "Open-Close Kata" do
       expect(say(2)).to eq "Pair_2"
       expect(say(4)).to eq "Pair_4"
     end
+
+    it 'apply a rule with A and B' do
+      expect(say(3)).to eq "Triple_3"
+      expect(say(6)).to eq "Triple_3_Pair_2"
+    end
   end
 
   describe 'with a chain of rules' do
