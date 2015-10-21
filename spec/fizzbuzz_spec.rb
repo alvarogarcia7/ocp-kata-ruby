@@ -22,7 +22,6 @@ RSpec.describe "Open-Close Kata" do
     it 'apply a rule with A or B' do
       expect(say(2)).to eq "Pair_2"
       expect(say(4)).to eq "Pair_4"
-      expect(say(0)).to eq "0"
     end
   end
 
