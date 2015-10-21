@@ -145,7 +145,7 @@ class Rule
   end
 
   def self.and *predicates
-    self.new {|a_number| predicates.map {|predicate1| predicate1.call a_number}.inject(true) {|acc, e| acc and e}}
+    self.new {|a_number| apply_to_all(predicates, a_number).inject(true) {|acc, e| acc and e}}
   end
 
   def self.not predicate
