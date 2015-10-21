@@ -10,7 +10,7 @@ RSpec.describe "Open-Close Kata" do
   describe 'with the specification pattern' do
     before(:each) do
       rules = [Rule.or(->x{x == 2}, ->x{x == 4}).then{|x| "Pair_#{x}"},
-              Rule.or(->x {x == 0},->x{false}).then{|x| x.to_s},
+              Rule.or(->x {x == 0}).then{|x| x.to_s},
               Rule.and(->x{x % 3 == 0}, ->x{x % 2 != 0}).then{|x| "Multiple_3"},
               Rule.and(->x{x % 3 == 0}, ->x{x % 2 == 0}).then{|x| "Multiple_3,2"}
       ]
