@@ -145,11 +145,7 @@ class Rule
   end
 
   def self.or *predicates
-    self.new {|a_number| predicates.map! { |current| Rule.new { |a_number| current.call a_number
-    } } if predicates[0].class == Proc
-    apply_to_all_value = predicates.map { |current| current.call a_number
-    }
-    apply_to_all_value.reduce(false) {|acc, e| acc or e}}
+    self.new {|a_number| apply_to_all(predicates, a_number).reduce(false) {|acc, e| acc or e}}
   end
 
   def self.and *predicates
