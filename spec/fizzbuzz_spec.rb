@@ -131,8 +131,8 @@ class Rule
     self.new {|a_number| predicates.map {|predicate1| predicate1.call a_number}.inject(false) {|acc, e| acc or e}}
   end
 
-  def self.and predicate1, predicate2
-    self.new {|a_number| (predicate1.call a_number) and (predicate2.call a_number)}
+  def self.and *predicates
+    self.new {|a_number| predicates.map {|predicate1| predicate1.call a_number}.inject(true) {|acc, e| acc and e}}
   end
 
   def then &action
