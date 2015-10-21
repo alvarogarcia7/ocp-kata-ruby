@@ -153,14 +153,24 @@ class Rule
   end
 
   def then &action
+    FilteringAction.new(@predicate, action)
+  end
+
+  def call a_number
+    @predicate.call a_number
+  end
+
+end
+
+class FilteringAction
+  def initialize predicate, action
+    @predicate = predicate
     @action = action
-    self
   end
 
   def call a_number
     @action.call a_number if @predicate.call a_number
   end
-
 end
 
 class FizzBuzz
