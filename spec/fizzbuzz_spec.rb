@@ -11,8 +11,8 @@ RSpec.describe "Open-Close Kata" do
     before(:each) do
       rules = [Rule.or(->x{x == 2}, ->x{x == 4}).then{|x| "Pair_#{x}"},
               Rule.if(->x {x == 0}).then{|x| x.to_s},
+              Rule.and(->x{x % 3 == 0}, Rule.or(->x{x % 2 == 0}, ->x{x%7==0})).then{|x| "Multiple_3,#{x%2==0?2:7}"},
               Rule.and(->x{x % 3 == 0}, ->x{x % 2 != 0}).then{|x| "Multiple_3"},
-              Rule.and(->x{x % 3 == 0}, ->x{x % 2 == 0}).then{|x| "Multiple_3,2"},
               Rule.not(->x{x > 0}).then{|x| "Negative_#{-x}"},
       ]
       @fizz_buzz = FizzBuzz.new(*rules)
@@ -30,6 +30,7 @@ RSpec.describe "Open-Close Kata" do
     it 'apply a rule with A and B' do
       expect(say(3)).to eq "Multiple_3"
       expect(say(6)).to eq "Multiple_3,2"
+      expect(say(3*7)).to eq "Multiple_3,7"
     end
 
     it 'apply a rule with NOT A' do
@@ -128,6 +129,8 @@ class Rule
       all_rules.join("") if all_rules.none? {|x| x.nil?} }
   end
 
+  attr_accessor :predicate
+
   def initialize &predicate
     @predicate = predicate
   end
@@ -137,11 +140,16 @@ class Rule
   end
 
   def self.apply_to_all predicates, a_number
+    predicates.map! {|current| Rule.new {|a_number| current.call a_number}} if predicates[0].class == Proc
     predicates.map {|current| current.call a_number}
   end
 
   def self.or *predicates
-    self.new {|a_number| apply_to_all(predicates, a_number).reduce(false) {|acc, e| acc or e}}
+    self.new {|a_number| predicates.map! { |current| Rule.new { |a_number| current.call a_number
+    } } if predicates[0].class == Proc
+    apply_to_all_value = predicates.map { |current| current.call a_number
+    }
+    apply_to_all_value.reduce(false) {|acc, e| acc or e}}
   end
 
   def self.and *predicates
