@@ -11,8 +11,8 @@ RSpec.describe "Open-Close Kata" do
     before(:each) do
       rules = [Rule.or(->x{x == 2}, ->x{x == 4}).then{|x| "Pair_#{x}"},
               Rule.or(->x {x == 0},->x{false}).then{|x| x.to_s},
-              Rule.and(->x{x % 3 == 0}, ->x{x % 2 != 0}).then{|x| "Triple_3"},
-              Rule.and(->x{x % 3 == 0}, ->x{x % 2 == 0}).then{|x| "Triple_3_Pair_2"}
+              Rule.and(->x{x % 3 == 0}, ->x{x % 2 != 0}).then{|x| "Multiple_3"},
+              Rule.and(->x{x % 3 == 0}, ->x{x % 2 == 0}).then{|x| "Multiple_3,2"}
       ]
       @fizz_buzz = FizzBuzz.new(*rules)
     end
@@ -27,8 +27,8 @@ RSpec.describe "Open-Close Kata" do
     end
 
     it 'apply a rule with A and B' do
-      expect(say(3)).to eq "Triple_3"
-      expect(say(6)).to eq "Triple_3_Pair_2"
+      expect(say(3)).to eq "Multiple_3"
+      expect(say(6)).to eq "Multiple_3,2"
     end
   end
 
