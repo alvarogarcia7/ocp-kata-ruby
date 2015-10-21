@@ -20,3 +20,6 @@
 (3..2,-1).to_a
 3.downto 1
 5.downto(1) do |i| puts i end
+load "src/fizzbuzz_spec.rb"
+load "spec/fizzbuzz_spec.rb"
+load "spec/spec_helper.rb"

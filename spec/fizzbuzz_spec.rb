@@ -9,8 +9,9 @@ RSpec.describe "Open-Close Kata" do
 
   describe 'with the specification pattern' do
     before(:each) do
-      rules = [Rule.when{|x| x == 0}.then{|x| x.to_s},
-               Rule.when{|x| x == 2}.or.when{|x| x == 4}.then{|x| "Pair_#{x}"}]
+      rules = [Rule.or(->x{x == 2}, ->x{x == 4}).then{|x| "Pair_#{x}"},
+              Rule.or(->x {x == 0},->x{false}).then{|x| x.to_s}
+      ]
       @fizz_buzz = FizzBuzz.new(*rules)
     end
 
@@ -21,6 +22,7 @@ RSpec.describe "Open-Close Kata" do
     it 'apply a rule with A or B' do
       expect(say(2)).to eq "Pair_2"
       expect(say(4)).to eq "Pair_4"
+      expect(say(0)).to eq "0"
     end
   end
 
@@ -119,17 +121,19 @@ class Rule
     @predicate = predicate
   end
 
-  def self.when &predicate
-    self.new &predicate
+  def self.or predicate1, predicate2
+    self.new {|a_number| (predicate1.call a_number) or (predicate2.call a_number)}
   end
 
   def then &action
     @action = action
+    self
   end
 
   def call a_number
     @action.call a_number if @predicate.call a_number
   end
+
 end
 
 class FizzBuzz
