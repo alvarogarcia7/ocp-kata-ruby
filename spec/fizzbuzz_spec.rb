@@ -136,8 +136,12 @@ class Rule
     self.new {|a_number| predicate.call a_number}
   end
 
+  def self.apply_to_all predicates, a_number
+    predicates.map {|current| current.call a_number}
+  end
+
   def self.or *predicates
-    self.new {|a_number| predicates.map {|predicate1| predicate1.call a_number}.inject(false) {|acc, e| acc or e}}
+    self.new {|a_number| apply_to_all(predicates, a_number).inject(false) {|acc, e| acc or e}}
   end
 
   def self.and *predicates
