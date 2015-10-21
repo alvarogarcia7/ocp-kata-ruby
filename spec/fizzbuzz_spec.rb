@@ -127,8 +127,8 @@ class Rule
     @predicate = predicate
   end
 
-  def self.or predicate1, predicate2
-    self.new {|a_number| (predicate1.call a_number) or (predicate2.call a_number)}
+  def self.or *predicates
+    self.new {|a_number| predicates.map {|predicate1| predicate1.call a_number}.inject(false) {|acc, e| acc or e}}
   end
 
   def self.and predicate1, predicate2
